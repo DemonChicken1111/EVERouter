@@ -9,7 +9,7 @@ Version: 1.0
 from tkinter import*
 from tkinter import ttk
 from tkinter.ttk import *
-
+import pyperclip
 
 class EVERouter(Frame):
 	"""docstring for EVERouter"""
@@ -45,15 +45,7 @@ class EVERouter(Frame):
 	def AddSigs(self):
 
 		#Reads Clipboard
-
-		"""
-		Does what it's supposed to do but it creates windows (Need to figure out how to successfully hide them or delete them)
-		"""
-		Tk().withdraw()
-		clipboard = Tk().clipboard_get(); Tk().destroy()
-		print(clipboard)
-		Tk().destroy()
-
+		clipboard = pyperclip.paste()
 
 		#Parses Text
 
