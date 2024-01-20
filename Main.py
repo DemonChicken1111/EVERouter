@@ -29,6 +29,7 @@ class EVERouter(Frame):
 
 		self.FileMenu.add_command(label = "New Route")
 		self.FileMenu.add_command(label = "Open Route")
+		self.FileMenu.add_command(label = "Copy clipboard", command = self.AddSigs)
 
 		#Create Treeview
 		self.Tree = Treeview(self, columns = ("lastupdate"), selectmode = BROWSE)
@@ -42,22 +43,38 @@ class EVERouter(Frame):
 
 
 	def AddSigs(self):
+
 		#Reads Clipboard
+
+		"""
+		Does what it's supposed to do but it creates windows (Need to figure out how to successfully hide them or delete them)
+		"""
+		Tk().withdraw()
+		clipboard = Tk().clipboard_get(); Tk().destroy()
+		print(clipboard)
+		Tk().destroy()
+
 
 		#Parses Text
 
-		#Adds to a dictionary ['id': 'sig text'] 
+		#Compares to a dictionary ['id': 'sig text'] 
+		#If sigs no longer exist: Delete.
+
+		#Change Sys Last Updated Value
 
 	def OpenSigs(self):
 		#Reads dictionary and looks for current selction id
 
 		#Puts dictionary data into SigDisplay
 
-
 	def ReadData():
+		#Parses Text
 
+		#Compares to a dictionary ['id': 'sig text'] 
+		#If sigs no longer exist: Delete.
 
 	def SaveData():
+		#Change Sys Last Updated Value
 
 
 def main():
