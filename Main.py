@@ -10,6 +10,7 @@ from tkinter import*
 from tkinter import ttk
 from tkinter.ttk import *
 
+
 class EVERouter(Frame):
 	"""docstring for EVERouter"""
 
@@ -29,14 +30,34 @@ class EVERouter(Frame):
 		self.FileMenu.add_command(label = "New Route")
 		self.FileMenu.add_command(label = "Open Route")
 
-		#Create Tree Veiw
+		#Create Treeview
 		self.Tree = Treeview(self, columns = ("lastupdate"), selectmode = BROWSE)
 		self.Tree.heading("#0", text = "System")
 		self.Tree.heading("lastupdate", text = "Last Updated")
 		self.Tree.grid(row = 2, column = 0)
 
-		#Create Sig Display
+		#Create SigDisplay
+		self.SigDisplay = Text(self, height = 10, width = 40)
+		self.SigDisplay.grid(row = 2, column = 2)
 
+
+	def AddSigs(self):
+		#Reads Clipboard
+
+		#Parses Text
+
+		#Adds to a dictionary ['id': 'sig text'] 
+
+	def OpenSigs(self):
+		#Reads dictionary and looks for current selction id
+
+		#Puts dictionary data into SigDisplay
+
+
+	def ReadData():
+
+
+	def SaveData():
 
 
 def main():
