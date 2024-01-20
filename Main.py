@@ -7,6 +7,8 @@ Version: 1.0
 """
 
 from tkinter import*
+from tkinter import ttk
+from tkinter.ttk import *
 
 class EVERouter(Frame):
 	"""docstring for EVERouter"""
@@ -14,53 +16,28 @@ class EVERouter(Frame):
 
 	def __init__(self):
 		Frame.__init__(self)
-		self.master.title("EVEGuide")
+		self.master.title("EVERouter")
 		self.grid()
 
-		#New System Button
-		self.SysButton = Button(self, text = "New System", command = self.CreateSystem)
-		self.SysButton.grid(row = 0, column = 0, rowspan = 2)
+		#Create Menu
+		self.Menu = Menu(self.master)
+		self.master.config(menu = self.Menu)
 
-		#System Input Field
-		self.SysVar = StringVar()
-		self.SysInput = Entry(self, textvariable = self.SysVar)
-		self.SysInput.grid(row = 0, column = 3)
+		self.FileMenu = Menu(self.Menu, tearoff = False)
+		self.Menu.add_cascade(menu = self.FileMenu, label = "File")
 
-	def CreateSystem(self):
-		#Event Handler for SysButton
-		
-		#Create Sys Frame
-		self.SystemWidget = Frame(self)
-		self.SystemWidget.grid(row = 0, column = 20)
+		self.FileMenu.add_command(label = "New Route")
+		self.FileMenu.add_command(label = "Open Route")
 
-		#Add Sig List
-		
-		self.SigList()
+		#Create Tree Veiw
+		self.Tree = Treeview(self, columns = ("lastupdate"), selectmode = BROWSE)
+		self.Tree.heading("#0", text = "System")
+		self.Tree.heading("lastupdate", text = "Last Updated")
+		self.Tree.grid(row = 2, column = 0)
 
-		#Add Sig Entry Field
+		#Create Sig Display
 
-		#self.SigScroll = Scrollbar(self.SystemWidget, orient = VERTICAL)
-		#self.SigScroll.grid(row = 0, column = 1, sticky = N+S)
 
-		#self.SigList = Listbox(self.SystemWidget, width = 6, height = 10, selectmode = SINGLE, yscrollcommand = self.SigScroll.set)
-		#self.SigList.grid(row = 0, column = 0, sticky = N+S)
-		#self.SigScroll["command"] = self.SigList.yview
-
-		#Add Sig Buttons (Add)
-
-	def SigList(self):
-
-		#System = self.SysVar.get() (Doesn't work at all lmao)
-
-		self.SigSys = Entry(self.SystemWidget, textvariable = self.SysVar) #Makes the input field update real time with entry box
-		self.SigSys.grid(row = 0, column = 0, sticky = N)
-
-		self.SigScroll = Scrollbar(self.SystemWidget, orient = VERTICAL)
-		self.SigScroll.grid(row = 1, column = 1, sticky = N+S)
-
-		self.SigList = Listbox(self.SystemWidget, width = 6, height = 10, selectmode = SINGLE, yscrollcommand = self.SigScroll.set)
-		self.SigList.grid(row = 1, column = 0, sticky = N+S)
-		self.SigScroll["command"] = self.SigList.yview
 
 def main():
 	EVERouter().mainloop()
