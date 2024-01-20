@@ -24,14 +24,30 @@ class EVERouter(Frame):
 
 	def CreateSystem(self):
 		#Event Handler for SysButton
-
+		
 		#Create Sys Frame
+		self.SystemWidget = Frame(self)
+		self.SystemWidget.grid(row = 0, column = 20)
 
 		#Add Sig List
+		self.SigScroll = Scrollbar(self.SystemWidget, orient = VERTICAL)
+		self.SigList = Listbox(self.SystemWidget, width = 6, height = 10, selectmode = SINGLE, yscrollcommand = self.SigScroll.set)
+
+		if bool(self.SigList.winfo_exists()) == True:
+			print("True")
+		else:
+			self.SigScroll.grid(row = 0, column = 1, sticky = N+S)
+			self.SigList.grid(row = 0, column = 0, sticky = N+S)
+			self.SigScroll["command"] = self.SigList.yview
 
 		#Add Sig Entry Field
+		#self.SigScroll.grid(row = 0, column = 1, sticky = N+S)
+
+		#self.SigList.grid(row = 0, column = 0, sticky = N+S)
+		#self.SigScroll["command"] = self.SigList.yview
 
 		#Add Sig Buttons (Add)
+
 
 
 def main():
