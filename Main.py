@@ -42,7 +42,6 @@ class EVERouter(Frame):
 		self.SigDisplay = Text(self, height = 10, width = 40)
 		self.SigDisplay.grid(row = 2, column = 2)
 
-
 	def AddSigs(self):
 
 		#Reads Clipboard
@@ -51,8 +50,8 @@ class EVERouter(Frame):
 		#Parses New Text
 		NewSigList = clipboard.split("\n")
 
-    	#Pulls SigList from save file, based on current selection ID
-		SigList = ['RMM-936\tCosmic Anomaly\tOre Site\tMedium Jaspet Deposit\t100.0%\t6.17 AU\r', 'UIY-608\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.47 AU\r', 'HQJ-988\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.57 AU\r', 'VSG-874\tCosmic Anomaly\tCombat Site\tDrone Assembly\t100.0%\t7.82 AU\r', 'KTA-296\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t7.97 AU\r', 'PSH-909\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t7.97 AU\r', 'JUX-749\tCosmic Anomaly\tCombat Site\tAngel Hidden Den\t100.0%\t8.60 AU\r', 'WFM-672\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t8.88 AU\r', 'GOU-950\tCosmic Anomaly\tOre Site\tGlacial Mass Belt\t100.0%\t8.96 AU\r', 'AYQ-296\tCosmic Anomaly\tCombat Site\tAngel Yard\t100.0%\t9.03 AU\r', 'EFL-300\tCosmic Signature\t\t\t0.0%\t13.51 AU\r', 'UCZ-104\tCosmic Signature\t\t\t0.0%\t49.06 AU\r', 'BAS-475\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t49.20 AU']
+    	#Pulls SigList from save file dictonary, based on current selection ID
+		SigList = []
 
 		#Making sure SigList is a valid input
 		if NewSigList[0][3] != "-":
@@ -79,7 +78,14 @@ class EVERouter(Frame):
 		SigList[i] = n
 		
 		#Save SigList to Route file
-		
+
+	def ReadData():
+		#Opens Save File
+
+		#Loads to dictionary
+
+	def WriteData():
+
 
 def main():
 	EVERouter().mainloop()
