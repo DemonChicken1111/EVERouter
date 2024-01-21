@@ -6,6 +6,7 @@ Inspired by Chloroken and his routing software: https://github.com/chloroken/rou
 Version: 1.0
 """
 
+from itertools import zip_longest
 from tkinter import*
 from tkinter import ttk
 from tkinter.ttk import *
@@ -46,34 +47,39 @@ class EVERouter(Frame):
 
 		#Reads Clipboard
 		clipboard = pyperclip.paste()
-		#print(clipboard)
 
-		#Parses Text
-		clipboard = clipboard.split("\n")
-		NewSigList = list(clipboard)
-		#print(NewSigList)
+		#Parses New Text
+		NewSigList = clipboard.split("\n")
 
-		SigList = ['RMM-936\tCosmic Anomaly\tOre Site\tMedium Jaspet Deposit\t100.0%\t6.17 AU', 'UIY-608\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.47 AU', 'HQJ-988\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.57 AU', 'VSG-874\tCosmic Anomaly\tCombat Site\tDrone Assembly\t100.0%\t7.82 AU', 'KTA-296\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t7.97 AU', 'PSH-909\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t7.97 AU', 'JUX-749\tCosmic Anomaly\tCombat Site\tAngel Hidden Den\t100.0%\t8.60 AU', 'WFM-672\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t8.88 AU', 'GOU-950\tCosmic Anomaly\tOre Site\tGlacial Mass Belt\t100.0%\t8.96 AU', 'AYQ-296\tCosmic Anomaly\tCombat Site\tAngel Yard\t100.0%\t9.03 AU', 'EFL-300\tCosmic Signature\t\t\t0.0%\t13.51 AU', 'UCZ-104\tCosmic Signature\t\t\t0.0%\t49.06 AU', 'BAS-475\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t49.20 AU']
-		i = 0
-		j = 0
+    	#Pulls SigList from save file, based on current selection ID
+		SigList = ['RMM-936\tCosmic Anomaly\tOre Site\tMedium Jaspet Deposit\t100.0%\t6.17 AU\r', 'UIY-608\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.47 AU\r', 'HQJ-988\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.57 AU\r', 'VSG-874\tCosmic Anomaly\tCombat Site\tDrone Assembly\t100.0%\t7.82 AU\r', 'KTA-296\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t7.97 AU\r', 'PSH-909\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t7.97 AU\r', 'JUX-749\tCosmic Anomaly\tCombat Site\tAngel Hidden Den\t100.0%\t8.60 AU\r', 'WFM-672\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t8.88 AU\r', 'GOU-950\tCosmic Anomaly\tOre Site\tGlacial Mass Belt\t100.0%\t8.96 AU\r', 'AYQ-296\tCosmic Anomaly\tCombat Site\tAngel Yard\t100.0%\t9.03 AU\r', 'EFL-300\tCosmic Signature\t\t\t0.0%\t13.51 AU\r', 'UCZ-104\tCosmic Signature\t\t\t0.0%\t49.06 AU\r', 'BAS-475\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t49.20 AU']
 
+		#Making sure SigList is a valid input
 		if NewSigList[0][3] != "-":
-			return
-		if NewSigList == '':
 			return
 		if len(NewSigList) == 0:
 			return
-		while i < len(NewSigList):
-			i += 1
-			while j < len(NewSigList):
-				j += 1
-				if NewSigList[i][0:7] == SigList[j][0:7]:
-					print("existing sig found")
-
-
-
-		#Compares to a dictionary ['id': 'sig text'] 
-		#If sigs no longer exist: Delete.
+    
+    	#Comparing NewSigList to SigList
+		for i, (n, s) in enumerate(zip_longest(NewSigList, SigList)):
+			if n == None: #Turns "None" values due to zip_longest into empty strings
+				n = ""
+				print(n)
+			if s == None:
+				s = ""
+				print(s)
+			if n[:7] == s[:7]: 
+				print("existing sig found")
+				if len(n) < len(s):
+					print("replacing with more detailed sig")
+					n = s
+					
+		#Updates SigList to now collated list
+		print("updated sigs")
+		SigList[i] = n
+		
+		#Save SigList to Route file
+		
 
 def main():
 	EVERouter().mainloop()
