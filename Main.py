@@ -51,46 +51,29 @@ class EVERouter(Frame):
 		#Parses Text
 		clipboard = clipboard.split("\n")
 		NewSigList = list(clipboard)
-
 		#print(NewSigList)
+
+		SigList = ['RMM-936\tCosmic Anomaly\tOre Site\tMedium Jaspet Deposit\t100.0%\t6.17 AU', 'UIY-608\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.47 AU', 'HQJ-988\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.57 AU', 'VSG-874\tCosmic Anomaly\tCombat Site\tDrone Assembly\t100.0%\t7.82 AU', 'KTA-296\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t7.97 AU', 'PSH-909\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t7.97 AU', 'JUX-749\tCosmic Anomaly\tCombat Site\tAngel Hidden Den\t100.0%\t8.60 AU', 'WFM-672\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t8.88 AU', 'GOU-950\tCosmic Anomaly\tOre Site\tGlacial Mass Belt\t100.0%\t8.96 AU', 'AYQ-296\tCosmic Anomaly\tCombat Site\tAngel Yard\t100.0%\t9.03 AU', 'EFL-300\tCosmic Signature\t\t\t0.0%\t13.51 AU', 'UCZ-104\tCosmic Signature\t\t\t0.0%\t49.06 AU', 'BAS-475\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t49.20 AU']
+		i = 0
+		j = 0
 
 		if NewSigList[0][3] != "-":
 			return
 		if NewSigList == '':
 			return
-		if NewSigList.len() == 0:
+		if len(NewSigList) == 0:
 			return
-
-		SigList = ['RMM-936\tCosmic Anomaly\tOre Site\tMedium Jaspet Deposit\t100.0%\t6.17 AU', 'UIY-608\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.47 AU', 'HQJ-988\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.57 AU', 'VSG-874\tCosmic Anomaly\tCombat Site\tDrone Assembly\t100.0%\t7.82 AU', 'KTA-296\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t7.97 AU', 'PSH-909\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t7.97 AU', 'JUX-749\tCosmic Anomaly\tCombat Site\tAngel Hidden Den\t100.0%\t8.60 AU', 'WFM-672\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t8.88 AU', 'GOU-950\tCosmic Anomaly\tOre Site\tGlacial Mass Belt\t100.0%\t8.96 AU', 'AYQ-296\tCosmic Anomaly\tCombat Site\tAngel Yard\t100.0%\t9.03 AU', 'UCZ-104\tCosmic Signature\t\t\t0.0%\t49.06 AU', 'BAS-475\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t49.20 AU']
-
-		i = 0
-		j = 0
-		while i < NewSigList.len():
+		while i < len(NewSigList):
 			i += 1
-			while j < SigList.len():
+			while j < len(NewSigList):
 				j += 1
-				if NewSigList[0:7] == SigList[0:7]:
+				if NewSigList[i][0:7] == SigList[j][0:7]:
 					print("existing sig found")
 
 
 
 		#Compares to a dictionary ['id': 'sig text'] 
 		#If sigs no longer exist: Delete.
-
-		#Change Sys Last Updated Value
-	def OpenSigs(self):
-		#Reads dictionary and looks for current selction id
-
-		#Puts dictionary data into SigDisplay
-
-	def ReadData():
-		#Parses Text
-
-		#Compares to a dictionary ['id': 'sig text'] 
-		#If sigs no longer exist: Delete.
-
-	def SaveData():
-		#Change Sys Last Updated Value
 
 def main():
 	EVERouter().mainloop()
