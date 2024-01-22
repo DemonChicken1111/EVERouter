@@ -1,0 +1,13 @@
+RMM-936	Cosmic Anomaly	Ore Site	Medium Jaspet Deposit	100.0%	6.17 AU
+UIY-608	Cosmic Anomaly	Combat Site	Angel Den	100.0%	7.47 AU
+HQJ-988	Cosmic Anomaly	Combat Site	Angel Den	100.0%	7.57 AU
+VSG-874	Cosmic Anomaly	Combat Site	Drone Assembly	100.0%	7.82 AU
+KTA-296	Cosmic Anomaly	Combat Site	Angel Rally Point	100.0%	7.97 AU
+PSH-909	Cosmic Anomaly	Combat Site	Angel Hideaway	100.0%	7.97 AU
+JUX-749	Cosmic Anomaly	Combat Site	Angel Hidden Den	100.0%	8.60 AU
+WFM-672	Cosmic Anomaly	Combat Site	Angel Hideaway	100.0%	8.88 AU
+GOU-950	Cosmic Anomaly	Ore Site	Glacial Mass Belt	100.0%	8.96 AU
+AYQ-296	Cosmic Anomaly		        	100.0%	9.03 AU
+EFL-300	Cosmic Signature			0.0%	13.51 AU
+UCZ-104	Cosmic Signature			0.0%	49.06 AU
+BAS-475	Cosmic Anomaly	Combat Site	Angel Rally Point	100.0%	49.20 AU
