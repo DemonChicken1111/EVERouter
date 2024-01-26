@@ -1,5 +1,5 @@
 """
-This is the main file for EVERouter
+EVE Tool for local explorers, nomads, and frequent scanners 
 
 Inspired by Chloroken and his routing software: https://github.com/chloroken/routed
 
@@ -47,13 +47,13 @@ class EVERouter(Frame):
 		self.SigDisplay = Text(self, height = 10, width = 40)
 		self.SigDisplay.grid(row = 2, column = 2)
 
-		#Updates SigDisplay's text based on TreeList current selection
 
 	def DisplayUpdate(self):
 
+		#Updates SigDisplay's text based on TreeList current selection
 		Selection = self.Tree.selection()[0]
 
-		
+
 
 	def AddSigs(self):
 
