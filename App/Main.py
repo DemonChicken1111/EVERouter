@@ -7,10 +7,11 @@ Version: 1.0
 """
 
 from itertools import zip_longest
-from tkinter import*
+from tkinter import *
 from tkinter import ttk
 from tkinter.ttk import *
 import pyperclip
+import pickle
 
 class EVERouter(Frame):
 	"""docstring for EVERouter"""
@@ -29,8 +30,12 @@ class EVERouter(Frame):
 		self.Menu.add_cascade(menu = self.FileMenu, label = "File")
 
 		self.FileMenu.add_command(label = "New Route", command = self.AddRoute)
-		self.FileMenu.add_command(label = "Open Route")
-		self.FileMenu.add_command(label = "Copy clipboard", command = self.AddSigs)
+		self.FileMenu.add_command(label = "Open Route", command = self.OpenRoute)
+		self.FileMenu.add_separator()
+		self.FileMenu.add_command(label = "Save Route", command = self.SaveRoute)
+
+		self.SigMenu = Menu(self.Menu, tearoff = False)
+		self.SigMenu.add_command(label = "Add Sigs", command = self.AddSigs)
 
 		#Create Treeview
 		self.Tree = Treeview(self, columns = ("lastupdate"), selectmode = BROWSE)
@@ -41,6 +46,14 @@ class EVERouter(Frame):
 		#Create SigDisplay
 		self.SigDisplay = Text(self, height = 10, width = 40)
 		self.SigDisplay.grid(row = 2, column = 2)
+
+		#Updates SigDisplay's text based on TreeList current selection
+
+	def DisplayUpdate(self):
+
+		Selection = self.Tree.selection()[0]
+
+		
 
 	def AddSigs(self):
 
@@ -53,7 +66,8 @@ class EVERouter(Frame):
 
     	#Pulls SigList from save file dictonary, based on current selection ID
     	#Current List is for testing purposes
-		SigList = ['LCX-936\tCosmic Anomaly\tOre Site\tMedium Jaspet Deposit\t100.0%\t6.17 AU\r', 'UIY-608\tCosmic Anomaly\t\t\t100.0%\t7.47 AU\r', 'HQJ-988\tCosmic Anomaly\tCombat Site\tAngel Den\t100.0%\t7.57 AU\r', 'VSG-874\tCosmic Anomaly\tCombat Site\tDrone Assembly\t100.0%\t7.82 AU\r', 'KTA-296\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t7.97 AU\r', 'PSH-909\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t7.97 AU\r', 'JUX-749\tCosmic Anomaly\tCombat Site\tAngel Hidden Den\t100.0%\t8.60 AU\r', 'WFM-672\tCosmic Anomaly\tCombat Site\tAngel Hideaway\t100.0%\t8.88 AU\r', 'GOU-950\tCosmic Anomaly\tOre Site\tGlacial Mass Belt\t100.0%\t8.96 AU\r', 'AYQ-296\tCosmic Anomaly\t\t        \t100.0%\t9.03 AU\r', 'EFL-300\tCosmic Signature\t\t\t0.0%\t13.51 AU\r', 'UCZ-104\tCosmic Signature\t\t\t0.0%\t49.06 AU\r', 'BAS-475\tCosmic Anomaly\tCombat Site\tAngel Rally Point\t100.0%\t49.20 AU']
+		SigList = self.SigDict[Selection]
+
 
 		#Making sure SigList is a valid input
 		if NewSigList[0][3] != "-":
@@ -81,6 +95,16 @@ class EVERouter(Frame):
 		print("updated sigs")
 		print(SigList)
 
+		#Gets ID, and Adds ID + SigList to Dictionary
+		self.SigDict = {}
+		Selection = self.Tree.selection()[0]
+
+		self.SigDict[Selection] = SigList
+		print("\n\n")
+		print(self.SigDict)
+
+		self.SigDisplay.insert(INSERT, self.SigDict[self.Tree.selection()[0]])
+
 	def AddRoute(self):
 
 		#Makes Route Name
@@ -88,22 +112,56 @@ class EVERouter(Frame):
 
 		#Parses Clipboard (Route)
 		RouteClipboard = pyperclip.paste()
-		RouteList = []
+		self.RouteList = []
 	
 		#Removes "Current Location:"
 		#Looks for "(" and trims after it
 		for line in RouteClipboard.splitlines("\n"):
 			line = line.split("(")
 			if len(line) > 1:
-				RouteList.append(line[0])
+				self.RouteList.append(line[0])
 
-		print(RouteList)
+		print(self.RouteList)
 
 		#Adds Parsed Systesms as Subitems
-		for i, r in enumerate(RouteList):
+		for i, r in enumerate(self.RouteList):
 			self.Tree.insert(Route, END, text = r)
 
+	def SaveRoute(self):
 
+		#Makes save file
+		RouteSave = "Route.pickle"
+		SigSave = "Sig.pickle"
+
+		#Adds RouteList and SigDict to file
+		with open(RouteSave, "wb") as file:
+			pickle.dump(self.RouteList, file)
+			file.close()
+
+		with open(SigSave, "wb") as file:
+			pickle.dump(self.SigDict, file)
+			file.close()
+
+		print("Route Saved")
+
+	def OpenRoute(self):
+
+		RouteSave = "Route.pickle"
+		SigSave = "Sig.pickle"
+		Route = self.Tree.insert("", END, text = "New Route")
+
+		#gets save file and opens it
+		with open(RouteSave, "rb") as file:
+			self.RouteList = pickle.load(file)
+			file.close()
+
+		with open(SigSave, "rb") as file:
+			self.SigDict = pickle.load(file)
+			file.close()
+
+		#Adds systems to tree
+		for i, r in enumerate(self.RouteList):
+			self.Tree.insert(Route, END, text = r)
 
 def main():
 	EVERouter().mainloop()
