@@ -70,17 +70,17 @@ class EVERouter(Frame):
     	#This is a mess, clean up once it's working
 		try:
 			if len(self.SigDict[Selection]) == 0:
-				SigList = ['ABC-123 Cosmic Anomaly']
-		except KeyError:
-			self.SigDict[Selection] = ['ABC-123\tCosmic Anomaly']
+				SigList = ['AYQ-296	Cosmic Anomaly		        	100.0%	9.03 AU']
+		except KeyError: #Always ends up on key error for any selection w/out key and value
+			SigList = ['AYQ-296	Cosmic Anomaly		        	100.0%	9.03 AU']
 			print("KeyError")
-			SigList = self.SigDict[Selection]
+			print(SigList)
 		else:
-			SigList = self.SigDict[Selection] 
+			SigList = self.SigDict[Selection]
 
 		#Parses New Text
 		NewSigList = SigClipboard.split("\n")
-		print(NewSigList)
+		#print(NewSigList)
 
 		#Making sure SigList is a valid input
 		if NewSigList[0][3] != "-":
