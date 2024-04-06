@@ -60,17 +60,19 @@ class EVERouter(Frame):
 	def AddSigs(self): 
 
 		Selection = self.Tree.selection()[0]
+		TreeviewChildren = self.Tree.get_children()
 
 		#Reads Clipboard
 		SigClipboard = pyperclip.paste()
 
     	#Pulls SigList from save file dictonary, based on current selection ID
     	#Also verifies if SigDict from Save File exists
+    	#This is a mess, clean up once it's working
 		try:
 			if len(self.SigDict[Selection]) == 0:
 				SigList = ['ABC-123 Cosmic Anomaly']
 		except KeyError:
-			self.SigDict[Selection] = ['ABC-123 Cosmic Anomaly']
+			self.SigDict[Selection] = ['ABC-123\tCosmic Anomaly']
 			print("KeyError")
 			SigList = self.SigDict[Selection]
 		else:
@@ -78,7 +80,7 @@ class EVERouter(Frame):
 
 		#Parses New Text
 		NewSigList = SigClipboard.split("\n")
-			#print(NewSigList)
+		print(NewSigList)
 
 		#Making sure SigList is a valid input
 		if NewSigList[0][3] != "-":
@@ -108,6 +110,10 @@ class EVERouter(Frame):
 
 		#Gets ID, and Adds ID + SigList to Dictionary
 		self.SigDict[Selection] = SigList
+
+		#Gets rest of Treeview IDs and adds [''] to their keys
+
+
 		print("\n\n")
 		print(self.SigDict)
 
@@ -154,9 +160,10 @@ class EVERouter(Frame):
 
 	def OpenRoute(self):
 
+		Count = 1
 		RouteSave = "Route.pickle"
 		SigSave = "Sig.pickle"
-		Route = self.Tree.insert("", END, text = "New Route")
+		Route = self.Tree.insert("", END, text = "Route " + str(Count))
 
 		#gets save file and opens it
 		with open(RouteSave, "rb") as file:
@@ -170,6 +177,7 @@ class EVERouter(Frame):
 		for i, r in enumerate(self.RouteList):
 			self.Tree.insert(Route, END, text = r)
 
+		Count += 1
 
 def main():
 	EVERouter().mainloop()
