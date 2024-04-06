@@ -29,12 +29,14 @@ class EVERouter(Frame):
 		self.FileMenu = Menu(self.Menu, tearoff = False)
 		self.Menu.add_cascade(menu = self.FileMenu, label = "File")
 
+		#Creates Commands in Menu
 		self.FileMenu.add_command(label = "New Route", command = self.AddRoute)
 		self.FileMenu.add_command(label = "Open Route", command = self.OpenRoute)
 		self.FileMenu.add_separator()
 		self.FileMenu.add_command(label = "Save Route", command = self.SaveRoute)
 
 		self.SigMenu = Menu(self.Menu, tearoff = False)
+		self.Menu.add_cascade(menu = self.SigMenu, label = "Sigs")
 		self.SigMenu.add_command(label = "Add Sigs", command = self.AddSigs)
 
 		#Create Treeview
@@ -55,19 +57,28 @@ class EVERouter(Frame):
 
 
 
-	def AddSigs(self):
+	def AddSigs(self): 
+
+		Selection = self.Tree.selection()[0]
 
 		#Reads Clipboard
 		SigClipboard = pyperclip.paste()
 
+    	#Pulls SigList from save file dictonary, based on current selection ID
+    	#Also verifies if SigDict from Save File exists
+		try:
+			if len(self.SigDict[Selection]) == 0:
+				SigList = ['ABC-123 Cosmic Anomaly']
+		except KeyError:
+			self.SigDict[Selection] = ['ABC-123 Cosmic Anomaly']
+			print("KeyError")
+			SigList = self.SigDict[Selection]
+		else:
+			SigList = self.SigDict[Selection] 
+
 		#Parses New Text
 		NewSigList = SigClipboard.split("\n")
 			#print(NewSigList)
-
-    	#Pulls SigList from save file dictonary, based on current selection ID
-    	#Current List is for testing purposes
-		SigList = self.SigDict[Selection]
-
 
 		#Making sure SigList is a valid input
 		if NewSigList[0][3] != "-":
@@ -80,7 +91,7 @@ class EVERouter(Frame):
 			if n == None: #Turns "None" values due to zip_longest into empty strings
 				n = ""
 				print(n)
-			if s == None:
+			if s == None: #Turns "None" values into empty string for SigList
 				s = ""
 				print(s)
 			if n[:7] == s[:7]: 
@@ -96,9 +107,6 @@ class EVERouter(Frame):
 		print(SigList)
 
 		#Gets ID, and Adds ID + SigList to Dictionary
-		self.SigDict = {}
-		Selection = self.Tree.selection()[0]
-
 		self.SigDict[Selection] = SigList
 		print("\n\n")
 		print(self.SigDict)
@@ -154,7 +162,6 @@ class EVERouter(Frame):
 		with open(RouteSave, "rb") as file:
 			self.RouteList = pickle.load(file)
 			file.close()
-
 		with open(SigSave, "rb") as file:
 			self.SigDict = pickle.load(file)
 			file.close()
@@ -162,6 +169,7 @@ class EVERouter(Frame):
 		#Adds systems to tree
 		for i, r in enumerate(self.RouteList):
 			self.Tree.insert(Route, END, text = r)
+
 
 def main():
 	EVERouter().mainloop()
